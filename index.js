@@ -21,9 +21,9 @@ app.get("/api/todos", function(req, res) { // to display todos by accessing the 
   res.json(todos_db.todos); // todos_db is module.exports of seed.js so it basically display the todos object of seed.js
 });
 
-app.delete("/api/todos/:id", function(req, res) { // to delete a todo from the todos_db
-  var del_id = req.param.id; // get the id from the 24th line url
-  var todo = todos_db.todos[del_id]; // get the todo at the given id from todos
+app.delete("/api/todos/:id", function(req, res) { // to delete a
+  var del_id = req.params.id; // get the id from the 24th line url
+  var todo = todos_db.todos[del_id]; // get the
   if (!todo) {
     res.status(400).json({
       err: "TODO DOESN'T EXIST"

@@ -4,14 +4,19 @@
   <title>
     ToDo List App
   </title>
+    <link rel="stylesheet" href="/style.css"/>
 </head>
 
 <body>
   <h1> My ToDo List</h1>
   <button value="Get Todos" onclick="getTodosAJAX()"> Get Todos </button>
   <div id="todos_list_div">
-    <script src="/script.js" type="text/javascript"></script>
+    <br><br>
+
   </div>
+  <input type = "text" id="new_todo_input" placeholder="Enter TODO">
+  <input type = "button" value="Add TODO" onclick="addTodoAJAX()">
+  <script src="/script.js" type="text/javascript"></script>
 </body>
 
 </html>
