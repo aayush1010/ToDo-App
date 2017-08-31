@@ -16,13 +16,13 @@
 }
 
 #completed_todo{
-  padding-left: 170px;
+  padding-left: 340px;
   font-size: 20;
   font-family: monospace;
 }
 
 #deleted_todo{
-  padding-left: 170px;
+  padding-left: 340px;
   font-size: 20;
   font-family: monospace;
 }

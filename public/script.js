@@ -75,7 +75,13 @@ function completeTodoElement(id, todo_object) {
     if (todo_object.status == "COMPLETE") {
         var newCompleteContent = document.createTextNode(todo_object.title);
         complete_todo_element.appendChild(newCompleteContent);
+        var complete_delete_button = document.createElement("button");
+        complete_delete_button.innerText = "DELETE";
+        complete_delete_button.setAttribute("onclick", "deleteTodoAJAX(" + id + ")");
+        complete_delete_button.setAttribute("class", "breathHorizontal");
+        complete_todo_element.appendChild(complete_delete_button);
     }
+
     return complete_todo_element;
 }
 
@@ -183,6 +189,7 @@ function deleteTodoAJAX(id) {
     if (xhr.readyState == RESPONSE_DONE) {
       if (xhr.status == STATUS_OK) {
         deleted_todo_elements(DELETED_TODO, xhr.responseText);
+        completed_todo_elements(COMPLETED_TODO, xhr.responseText);
         add_todo_elements(TODOS_LIST_ID, xhr.responseText);
       } else {
         console.log(xhr.responseText);
