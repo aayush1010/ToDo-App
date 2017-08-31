@@ -6,47 +6,47 @@ const NEW_TODO_INPUT_ID = "new_todo_input";
 window.onload = getTodosAJAX();
 
 function add_todo_elements(id, todos_data_json) {
+
   var parent = document.getElementById(id); // get elemnt of div to print the json in div section
   //parent.innerText = todos_data_json; // add the things in div section
   var todos = JSON.parse(todos_data_json);
   parent.innerHTML = "";
-  if(parent){
+  if (parent) {
     Object.keys(todos).forEach(
-        function (key) {
-          var todo_element = createTodoElement(key, todos[key]);
-          parent.appendChild(todo_element);
-        }
+      function(key) {
+        var todo_element = createTodoElement(key, todos[key]);
+        parent.appendChild(todo_element);
+      }
     )
   }
 }
 
 function createTodoElement(id, todo_object) {
-    var todo_element = document.createElement("div");
-    todo_element.innerText = todo_object.title;
-    todo_element.setAttribute("data-id", id);
-    todo_element.setAttribute(
-        "class", "todoStatus"+ todo_object.status + " " + "breathVertical"
-    );
 
+  var todo_element = document.createElement("div");
 
-    if (todo_object.status == "ACTIVE"){
+  todo_element.setAttribute("data-id", id);
+  todo_element.setAttribute(
+    "class", "todoStatus" + todo_object.status + " " + "breathVertical"
+  );
+  if (todo_object.status == "ACTIVE") {
+    var complete_button = document.createElement("button");
+    complete_button.innerText = "Mark as Complete";
+    complete_button.setAttribute("onclick", "completeTodoAJAX(" + id + ")");
+    complete_button.setAttribute("class", "breathHorizontal");
+    todo_element.appendChild(complete_button);
+  }
+  var newContent = document.createTextNode(todo_object.title);
+  todo_element.appendChild(newContent);
 
-        var complete_button = document.createElement("button");
-        complete_button.innerText = "Mark as Complete";
-        complete_button.setAttribute("onclick", "completeTodoAJAX("+id+")");
-        complete_button.setAttribute("class", "breathHorizontal");
-        todo_element.appendChild(complete_button);
-    }
-
-    if(todo_object.status == "ACTIVE" || todo_object.status == "COMPLETE"){
-        var delete_button = document.createElement("button");
-        delete_button.innerText = "DELETE";
-        delete_button.setAttribute("onclick", "deleteTodoAJAX("+id+")");
-        delete_button.setAttribute("class", "breathHorizontal");
-        todo_element.appendChild(delete_button);
-    }
-
-    return todo_element;
+  if (todo_object.status == "ACTIVE" || todo_object.status == "COMPLETE") {
+    var delete_button = document.createElement("button");
+    delete_button.innerText = "DELETE";
+    delete_button.setAttribute("onclick", "deleteTodoAJAX(" + id + ")");
+    delete_button.setAttribute("class", "breathHorizontal");
+    todo_element.appendChild(delete_button);
+  }
+  return todo_element;
 }
 
 function getTodosAJAX() {
@@ -66,72 +66,68 @@ function getTodosAJAX() {
 
 
 function addTodoAJAX() {
-    var title = document.getElementById(NEW_TODO_INPUT_ID).value;
-    console.log(title);
+  var title = document.getElementById(NEW_TODO_INPUT_ID).value;
+  console.log(title);
 
-    var xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
 
-    var bodata = "todo_title="+ encodeURI(title);
-    xhr.open("post", "/api/todos", true);
-    xhr.setRequestHeader(
-        "Content-type", "application/x-www-form-urlencoded"
-    );
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == RESPONSE_DONE) {
-            if (xhr.status == STATUS_OK) {
-                add_todo_elements(TODOS_LIST_ID, xhr.responseText);
-            }
-            else{
-                console.log(xhr.response);
-            }
-        }
+  var bodata = "todo_title=" + encodeURI(title);
+  xhr.open("post", "/api/todos", true);
+  xhr.setRequestHeader(
+    "Content-type", "application/x-www-form-urlencoded"
+  );
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == RESPONSE_DONE) {
+      if (xhr.status == STATUS_OK) {
+        add_todo_elements(TODOS_LIST_ID, xhr.responseText);
+      } else {
+        console.log(xhr.response);
+      }
     }
+  }
 
-    xhr.send(data = bodata);
+  xhr.send(data = bodata);
 }
 
 function completeTodoAJAX(id) {
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/api/todos/" + id, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    data = "todo_status=COMPLETE";
+  var xhr = new XMLHttpRequest();
+  xhr.open("PUT", "/api/todos/" + id, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  data = "todo_status=COMPLETE";
 
-    xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = function() {
 
-        if (xhr.readyState == RESPONSE_DONE) {
-            if (xhr.status == STATUS_OK) {
-                add_todo_elements(TODOS_LIST_ID, xhr.responseText);
-            }
-            else {
-                console.log(xhr.responseText);
-            }
-        }
+    if (xhr.readyState == RESPONSE_DONE) {
+      if (xhr.status == STATUS_OK) {
+        add_todo_elements(TODOS_LIST_ID, xhr.responseText);
+      } else {
+        console.log(xhr.responseText);
+      }
     }
+  }
 
 
-    xhr.send(data);
+  xhr.send(data);
 
 }
 
 function deleteTodoAJAX(id) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("DELETE", "/api/todos/" + id, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var data = "todo_status=DELETED";
+  var xhr = new XMLHttpRequest();
+  xhr.open("DELETE", "/api/todos/" + id, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  bodata = "todo_status=DELETED";
 
-    xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = function() {
 
-        if (xhr.readyState == RESPONSE_DONE) {
-            if (xhr.status == STATUS_OK) {
-                add_todo_elements(TODOS_LIST_ID, xhr.responseText);
-            }
-            else {
-                console.log(xhr.responseText);
-            }
-        }
+    if (xhr.readyState == RESPONSE_DONE) {
+      if (xhr.status == STATUS_OK) {
+        add_todo_elements(TODOS_LIST_ID, xhr.responseText);
+      } else {
+        console.log(xhr.responseText);
+      }
     }
+  }
 
-
-    xhr.send(data);
+  xhr.send(data = bodata);
 }

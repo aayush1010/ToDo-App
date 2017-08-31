@@ -1,27 +1,43 @@
-.breathVertical {
-    margin-top:5px;
-    margin-bottom:5px;
+#todo_head {
+  text-align: center;
+  background-color: #ffcc00;
+  height: 80px;
+  padding: 10px;
 }
 
+#todos_list_div {
+  padding-left: 170px;
+  font-size: 20;
+  font-family: monospace;
+}
+
+#add_todo {
+  padding-left: 170px;
+}
+
+.breathVertical {
+  margin-top: 15px;
+}
 
 .breathHorizontal {
-    margin-left:5px;
-    margin-right:5px;
+  margin-left: 50px;
+  margin-right: 15px;
+}
+
+h2 {
+  padding-left: 170px;
 }
 
 div.todoStatusACTIVE {
-
-    color : blue;
+  color: blue;
 }
 
-
-div.todoStatusCOMPLETE{
-    color : green;
-    text-decoration : line-through;
+div.todoStatusCOMPLETE {
+  color: green;
+  text-decoration: line-through;
 }
 
 div.todoStatusDELETED {
-    color : red;
-    text-decoration : line-through;
-
+  color: red;
+  text-decoration: line-through;
 }

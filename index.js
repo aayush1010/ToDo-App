@@ -35,7 +35,7 @@ app.delete("/api/todos/:id", function(req, res) { // to delete a
 });
 
 app.post("/api/todos", function(req, res) { // to add a new task
-  var todo = req.body.todo_title; 
+  var todo = req.body.todo_title;
   if (!todo || todo == "" || todo.trim() == "") {
     res.status(400).json({
       error: "TODO CANT BE EMPTY"
@@ -65,8 +65,7 @@ app.put("/api/todos/:id", function(req, res) {
     }
     var todo_status = req.body.todo_status;
     if (todo_status &&
-      (todo_status == todos_db.StatusENUM.ACTIVE ||
-        todo_status == todos_db.StatusENUM.COMPLETE)
+      (todo_status == todos_db.StatusENUM.ACTIVE || todo_status == todos_db.StatusENUM.COMPLETE)
     ) {
       todo.status = todo_status;
     }
