@@ -2,6 +2,7 @@ const STATUS_OK = 200;
 const RESPONSE_DONE = 4;
 const TODOS_LIST_ID = "todos_list_div";
 const NEW_TODO_INPUT_ID = "new_todo_input";
+const COMPLETED_TODO = "completed_todo";
 
 window.onload = getTodosAJAX();
 
@@ -35,11 +36,12 @@ function createTodoElement(id, todo_object) {
     complete_button.setAttribute("onclick", "completeTodoAJAX(" + id + ")");
     complete_button.setAttribute("class", "breathHorizontal");
     todo_element.appendChild(complete_button);
+      var newContent = document.createTextNode(todo_object.title);
+      todo_element.appendChild(newContent);
   }
-  var newContent = document.createTextNode(todo_object.title);
-  todo_element.appendChild(newContent);
 
-  if (todo_object.status == "ACTIVE" || todo_object.status == "COMPLETE") {
+
+  if (todo_object.status == "ACTIVE") {
     var delete_button = document.createElement("button");
     delete_button.innerText = "DELETE";
     delete_button.setAttribute("onclick", "deleteTodoAJAX(" + id + ")");
@@ -48,7 +50,33 @@ function createTodoElement(id, todo_object) {
   }
   return todo_element;
 }
+function completed_todo_elements(id, todos_data_json) {
+    var parent = document.getElementById(id); // get elemnt of div to print the json in div section
+    //parent.innerText = todos_data_json; // add the things in div section
+    var todos = JSON.parse(todos_data_json);
+    parent.innerHTML = "";
+    if (parent) {
+        Object.keys(todos).forEach(
+            function(key) {
+                var complete_todo_element = completeTodoElement(key, todos[key]);
+                parent.appendChild(complete_todo_element);
+            }
+        )
+    }
+}
 
+function completeTodoElement(id, todo_object) {
+    var complete_todo_element = document.createElement("div");
+    complete_todo_element.setAttribute("data-id", id);
+    complete_todo_element.setAttribute(
+        "class", "todoStatus" + todo_object.status + " " + "breathVertical"
+    );
+    if (todo_object.status == "COMPLETE") {
+        var newCompleteContent = document.createTextNode(todo_object.title);
+        complete_todo_element.appendChild(newCompleteContent);
+    }
+    return complete_todo_element;
+}
 function getTodosAJAX() {
   var xhr = new XMLHttpRequest(); //xhr - JS object for making request to server via JS
   xhr.open("GET", "/api/todos", true); // actually make the request to the /api/todos
@@ -58,6 +86,7 @@ function getTodosAJAX() {
       if (xhr.status == STATUS_OK) {
         console.log(xhr.responseText); // data coming from index.js from app.get of /api/todos which is basically a json file of todos
         add_todo_elements(TODOS_LIST_ID, xhr.responseText); // function for print the json file we get in xhr.responseText
+          completed_todo_elements(COMPLETED_TODO, xhr.responseText);
       }
     }
   }
@@ -100,6 +129,7 @@ function completeTodoAJAX(id) {
 
     if (xhr.readyState == RESPONSE_DONE) {
       if (xhr.status == STATUS_OK) {
+        completed_todo_elements(COMPLETED_TODO, xhr.responseText);
         add_todo_elements(TODOS_LIST_ID, xhr.responseText);
       } else {
         console.log(xhr.responseText);

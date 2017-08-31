@@ -11,12 +11,19 @@
   font-family: monospace;
 }
 
-#add_todo {
+#add_todo{
   padding-left: 170px;
+}
+
+#completed_todo{
+  padding-left: 170px;
+  font-size: 20;
+  font-family: monospace;
 }
 
 .breathVertical {
   margin-top: 15px;
+
 }
 
 .breathHorizontal {
@@ -26,6 +33,7 @@
 
 h2 {
   padding-left: 170px;
+
 }
 
 div.todoStatusACTIVE {
