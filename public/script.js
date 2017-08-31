@@ -3,6 +3,7 @@ const RESPONSE_DONE = 4;
 const TODOS_LIST_ID = "todos_list_div";
 const NEW_TODO_INPUT_ID = "new_todo_input";
 const COMPLETED_TODO = "completed_todo";
+const DELETED_TODO = "deleted_todo";
 
 window.onload = getTodosAJAX();
 
@@ -77,22 +78,51 @@ function completeTodoElement(id, todo_object) {
     }
     return complete_todo_element;
 }
-function getTodosAJAX() {
-  var xhr = new XMLHttpRequest(); //xhr - JS object for making request to server via JS
-  xhr.open("GET", "/api/todos", true); // actually make the request to the /api/todos
-  xhr.onreadystatechange = function() {
-    // code that needs to be exexuted after response
-    if (xhr.readyState == RESPONSE_DONE) {
-      if (xhr.status == STATUS_OK) {
-        console.log(xhr.responseText); // data coming from index.js from app.get of /api/todos which is basically a json file of todos
-        add_todo_elements(TODOS_LIST_ID, xhr.responseText); // function for print the json file we get in xhr.responseText
-          completed_todo_elements(COMPLETED_TODO, xhr.responseText);
-      }
+
+function deleted_todo_elements(id, todos_data_json) {
+    var parent = document.getElementById(id); // get elemnt of div to print the json in div section
+    //parent.innerText = todos_data_json; // add the things in div section
+    var todos = JSON.parse(todos_data_json);
+    parent.innerHTML = "";
+    if (parent) {
+        Object.keys(todos).forEach(
+            function(key) {
+                var delete_todo_element = deleteTodoElement(key, todos[key]);
+                parent.appendChild(delete_todo_element);
+            }
+        )
     }
-  }
-  xhr.send(data = null);
 }
 
+function deleteTodoElement(id, todo_object) {
+    var delete_todo_element = document.createElement("div");
+    delete_todo_element.setAttribute("data-id", id);
+    delete_todo_element.setAttribute(
+        "class", "todoStatus" + todo_object.status + " " + "breathVertical"
+    );
+    if (todo_object.status == "DELETED") {
+        var newdeleteContent = document.createTextNode(todo_object.title);
+        delete_todo_element.appendChild(newdeleteContent);
+    }
+    return delete_todo_element;
+}
+
+function getTodosAJAX() {
+    var xhr = new XMLHttpRequest(); //xhr - JS object for making request to server via JS
+    xhr.open("GET", "/api/todos", true); // actually make the request to the /api/todos
+    xhr.onreadystatechange = function() {
+        // code that needs to be exexuted after response
+        if (xhr.readyState == RESPONSE_DONE) {
+            if (xhr.status == STATUS_OK) {
+                console.log(xhr.responseText); // data coming from index.js from app.get of /api/todos which is basically a json file of todos
+                add_todo_elements(TODOS_LIST_ID, xhr.responseText); // function for print the json file we get in xhr.responseText
+                completed_todo_elements(COMPLETED_TODO, xhr.responseText);
+                deleted_todo_elements(DELETED_TODO, xhr.responseText);
+            }
+        }
+    }
+    xhr.send(data = null);
+}
 
 function addTodoAJAX() {
   var title = document.getElementById(NEW_TODO_INPUT_ID).value;
@@ -152,6 +182,7 @@ function deleteTodoAJAX(id) {
 
     if (xhr.readyState == RESPONSE_DONE) {
       if (xhr.status == STATUS_OK) {
+        deleted_todo_elements(DELETED_TODO, xhr.responseText);
         add_todo_elements(TODOS_LIST_ID, xhr.responseText);
       } else {
         console.log(xhr.responseText);
