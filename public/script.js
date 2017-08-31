@@ -35,7 +35,7 @@ function createTodoElement(id, todo_object) {
     var complete_button = document.createElement("button");
     complete_button.innerText = "Mark as Complete";
     complete_button.setAttribute("onclick", "completeTodoAJAX(" + id + ")");
-    complete_button.setAttribute("class", "breathHorizontal");
+    complete_button.setAttribute("class", "breathHorizontal completecssbutton");
     todo_element.appendChild(complete_button);
       var newContent = document.createTextNode(todo_object.title);
       todo_element.appendChild(newContent);
@@ -44,9 +44,9 @@ function createTodoElement(id, todo_object) {
 
   if (todo_object.status == "ACTIVE") {
     var delete_button = document.createElement("button");
-    delete_button.innerText = "DELETE";
+    delete_button.innerText = "Delete";
     delete_button.setAttribute("onclick", "deleteTodoAJAX(" + id + ")");
-    delete_button.setAttribute("class", "breathHorizontal");
+    delete_button.setAttribute("class", "breathHorizontal deletecssbutton");
     todo_element.appendChild(delete_button);
   }
   return todo_element;
@@ -76,9 +76,9 @@ function completeTodoElement(id, todo_object) {
         var newCompleteContent = document.createTextNode(todo_object.title);
         complete_todo_element.appendChild(newCompleteContent);
         var complete_delete_button = document.createElement("button");
-        complete_delete_button.innerText = "DELETE";
+        complete_delete_button.innerText = "Delete";
         complete_delete_button.setAttribute("onclick", "deleteTodoAJAX(" + id + ")");
-        complete_delete_button.setAttribute("class", "breathHorizontal");
+        complete_delete_button.setAttribute("class", "breathHorizontal deletecssbutton");
         complete_todo_element.appendChild(complete_delete_button);
     }
 
