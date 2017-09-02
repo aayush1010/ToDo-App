@@ -1,6 +1,6 @@
 input[type="text"] {
   font-size: 18px;
-  height: 30px;
+  height: 40px;
   border: solid 1px #dcdcdc;
   transition: box-shadow 0.3s, border 0.3s,
   background: #fff;

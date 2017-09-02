@@ -67,12 +67,18 @@ function completed_todo_elements(id, todos_data_json) {
 }
 
 function completeTodoElement(id, todo_object) {
+    var xhr = new XMLHttpRequest();
     var complete_todo_element = document.createElement("div");
     complete_todo_element.setAttribute("data-id", id);
     complete_todo_element.setAttribute(
         "class", "todoStatus" + todo_object.status + " " + "breathVertical"
     );
     if (todo_object.status == "COMPLETE") {
+        var complete_active_button = document.createElement("button");
+        complete_active_button.innerText = "Mark As Active";
+        complete_active_button.setAttribute("onclick", "add_todo_elements("+TODOS_LIST_ID+","+xhr.responseText+")");
+        complete_active_button.setAttribute("class", "breathHorizontal completecssbutton");
+        complete_todo_element.appendChild(complete_active_button);
         var newCompleteContent = document.createTextNode(todo_object.title);
         complete_todo_element.appendChild(newCompleteContent);
         var complete_delete_button = document.createElement("button");
