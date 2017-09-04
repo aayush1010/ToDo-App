@@ -1,11 +1,11 @@
 # ToDo-App
-ToDo App using JavaScript, Nodejs, Express Framework, AJAX
+ToDo App using JavaScript, Nodejs, Express Framework, AJAX.
 
 
 
-# GETTING STARTED
+# Getting Started
 
-To run this you must have node installed on your machine To run firstly run all the dependencies by 'npm install' which will install all the dependencies To run the application run using 'node index.js'.
+To run this you must have node installed on your machine. To run firstly run all the dependencies by 'npm install' which will install all the dependencies.
 
 # Prerequsites 
 
