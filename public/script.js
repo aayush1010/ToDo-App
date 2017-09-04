@@ -34,10 +34,11 @@ function createTodoElement(id, todo_object) {
   if (todo_object.status == "ACTIVE") {
     var complete_button = document.createElement("button");
     complete_button.innerText = "Mark as Complete";
-    complete_button.setAttribute("onclick", "completeTodoAJAX(" + id + ")");
-    complete_button.setAttribute("class", "breathHorizontal completecssbutton");
+    complete_button.setAttribute("onclick", "completeTodoAJAX(" + id + ", 'ACTIVE')");
+    complete_button.setAttribute("class", "breathHorizontal completecssbutton ");
     todo_element.appendChild(complete_button);
       var newContent = document.createTextNode(todo_object.title);
+
       todo_element.appendChild(newContent);
   }
 
@@ -76,7 +77,7 @@ function completeTodoElement(id, todo_object) {
     if (todo_object.status == "COMPLETE") {
         var complete_active_button = document.createElement("button");
         complete_active_button.innerText = "Mark As Active";
-        complete_active_button.setAttribute("onclick", "add_todo_elements("+TODOS_LIST_ID+","+xhr.responseText+")");
+        complete_active_button.setAttribute("onclick", "completeTodoAJAX(" + id + ", 'COMPLETE')");
         complete_active_button.setAttribute("class", "breathHorizontal completecssbutton");
         complete_todo_element.appendChild(complete_active_button);
         var newCompleteContent = document.createTextNode(todo_object.title);
@@ -160,18 +161,45 @@ function addTodoAJAX() {
   xhr.send(data = bodata);
 }
 
-function completeTodoAJAX(id) {
+function completeTodoAJAX(id, livestatus) {
 
   var xhr = new XMLHttpRequest();
+  /*xhr.open("GET","/api/todos",true);
+  var data=null;
+    var jsondata;
+    xhr.onreadystatechange=function () {
+        if (xhr.readyState == RESPONSE_DONE) {
+            if (xhr.status == STATUS_OK) {
+ jsondata=JSON.parse(xhr.responseText);
+            }
+        }
+            }*/
+
   xhr.open("PUT", "/api/todos/" + id, true);
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  data = "todo_status=COMPLETE";
+    if(livestatus == 'COMPLETE'){
+        data = "todo_status=ACTIVE";
+    }
+    else {
+        data = "todo_status=COMPLETE";
+    }
+   /* var livestatus = JSON.parse(xhr.responseText);
+    if(livestatus[id].status == 'COMPLETE'){
+        data = "todo_status=ACTIVE";
+    }
+    else {
+        data = "todo_status=COMPLETE";
+    }*/
+  //if(JSON.parse(xhr.responseText))
+//var jsonobj=JSON.parse(jsondata);
 
   xhr.onreadystatechange = function() {
 
     if (xhr.readyState == RESPONSE_DONE) {
       if (xhr.status == STATUS_OK) {
         completed_todo_elements(COMPLETED_TODO, xhr.responseText);
+          //var par = JSON.parse(xhr.responseText);
+          //console.log(par[id].status + "aayush");
         add_todo_elements(TODOS_LIST_ID, xhr.responseText);
       } else {
         console.log(xhr.responseText);

@@ -44,7 +44,8 @@ input[type="button"]{
 }
 
 #todos_list_div {
-  padding-left: 300px;
+
+  padding-left: 500px;
   font-size: 20;
   font-family: monospace;
 }
@@ -54,7 +55,7 @@ input[type="button"]{
 }
 
 #completed_todo{
-  padding-left: 340px;
+  padding-left: 500px;
   font-size: 20;
   font-family: monospace;
 }
@@ -78,7 +79,11 @@ input[type="button"]{
   margin: 4px 2px;
   cursor: pointer;
   color: black;
+  position: absolute;
+  left : 260px;
+
 }
+
 
 .deletecssbutton{
   background-color: #f44336; /* Green */
@@ -93,16 +98,21 @@ input[type="button"]{
   margin: 4px 2px;
   cursor: pointer;
   color: black;
+  position: absolute;
+  right : 600px;
 }
 
 .breathVertical {
   margin-top: 15px;
+  margin-bottom: 30px;
 
 }
 
 .breathHorizontal {
   margin-left: 50px;
   margin-right: 15px;
+
+
 }
 
 h2 {
