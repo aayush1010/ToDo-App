@@ -7,6 +7,34 @@ const DELETED_TODO = "deleted_todo";
 
 window.onload = getTodosAJAX();
 
+function hidecomplete() {
+    var x = document.getElementById('completed_todo');
+    var p = document.getElementById("toggle_complete");
+    if (x.style.display === 'none') {
+
+        x.style.display = 'block';
+        p.innerHTML = "Hide Completed Todos";
+    } else {
+        x.style.display = 'none';
+
+        p.innerHTML = "Show Completed Todos"
+    }
+}
+
+function hidedeleted() {
+    var x = document.getElementById('deleted_todo');
+    var p = document.getElementById("toggle_delete");
+    if (x.style.display === 'none') {
+
+        x.style.display = 'block';
+        p.innerHTML = "Hide Deleted Todos";
+    } else {
+        x.style.display = 'none';
+
+        p.innerHTML = "Show Deleted Todos"
+    }
+}
+
 function add_todo_elements(id, todos_data_json) {
 
   var parent = document.getElementById(id); // get elemnt of div to print the json in div section

@@ -66,6 +66,15 @@ input[type="button"]{
   font-family: monospace;
 }
 
+#toggle_complete{
+  margin-left: 1200px
+}
+
+
+#toggle_delete{
+  margin-left: 1200px
+}
+
 .completecssbutton{
   background-color: #4CAF50; /* Green */
   border: none;
@@ -126,7 +135,7 @@ div.todoStatusACTIVE {
 
 div.todoStatusCOMPLETE {
   color: green;
-  text-decoration: line-through;
+
 }
 
 div.todoStatusDELETED {
