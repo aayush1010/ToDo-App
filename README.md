@@ -9,17 +9,22 @@ To run this you must have node installed on your machine. To run firstly run all
 
 # Prerequsites 
 
- - Node js 
+ - Node JS
  - Express
  - Body-Parser
  - AJAX
 
 # How to run
 
- - Run "npm install express --save" in terminal
- - Run "npm install body-parser --save" in terminal
- - Run "node index.js" in terminal
- - Open Browser and go to "localhost:4000" to acces app
+ - First install all the dependencies
+ 	```bash
+ 	npm install
+ 	```
+ - Now run the server
+ 	```bash
+	npm start
+ 	```
+ - Open the browser and go to 'localhost:4000'
 
 
 # IDE 
