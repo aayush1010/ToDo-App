@@ -1,8 +1,8 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var todos_db = require("./seed.js"); // seed.js is basically database for our todos
+const express = require("express");
+const bodyParser = require("body-parser");
+const todos_db = require("./seed.js"); // seed.js is basically database for our todos
 
-var app = express();
+let app = express();
 
 app.use("/", function(req, res, next) {
   //this middleware is used to print in console of node.js
@@ -22,8 +22,8 @@ app.get("/api/todos", function(req, res) { // to display todos by accessing the 
 });
 
 app.delete("/api/todos/:id", function(req, res) { // to delete a
-  var del_id = req.params.id; // get the id from the 24th line url
-  var todo = todos_db.todos[del_id]; // get the
+  let del_id = req.params.id; // get the id from the 24th line url
+  let todo = todos_db.todos[del_id]; // get the
   if (!todo) {
     res.status(400).json({
       err: "TODO DOESN'T EXIST"
@@ -35,13 +35,13 @@ app.delete("/api/todos/:id", function(req, res) { // to delete a
 });
 
 app.post("/api/todos", function(req, res) { // to add a new task
-  var todo = req.body.todo_title;
+  let todo = req.body.todo_title;
   if (!todo || todo == "" || todo.trim() == "") {
     res.status(400).json({
       error: "TODO CANT BE EMPTY"
     });
   } else {
-    var new_todo_object = {
+    let new_todo_object = {
       title: req.body.todo_title,
       status: todos_db.StatusENUM.ACTIVE
     }
@@ -52,18 +52,18 @@ app.post("/api/todos", function(req, res) { // to add a new task
 });
 
 app.put("/api/todos/:id", function(req, res) {
-  var mod_id = req.params.id;
-  var todo = todos_db.todos[mod_id];
+  let mod_id = req.params.id;
+  let todo = todos_db.todos[mod_id];
   if (!todo) {
     res.status(400).json({
       err: "TODO DOESN'T EXIST FOR MODIFICATION"
     });
   } else {
-    var todo_title = req.body.todo_title;
+    let todo_title = req.body.todo_title;
     if (todo_title && todo_title != "" && todo_title.trim() != "") {
       todo.title = todo_title;
     }
-    var todo_status = req.body.todo_status;
+    let todo_status = req.body.todo_status;
     if (todo_status &&
       (todo_status == todos_db.StatusENUM.ACTIVE || todo_status == todos_db.StatusENUM.COMPLETE)
     ) {
@@ -74,4 +74,6 @@ app.put("/api/todos/:id", function(req, res) {
   }
 });
 
-app.listen(4000);
+app.listen(4000, function(){
+  console.log('Server running at localhost:4000');
+});
